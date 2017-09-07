@@ -10,6 +10,7 @@ public class ProducerAndConsumer {
     private final int LIMIT = 5;
     private final int BOTTOM = 0;
     private final Object lock1 = new Object();
+    private int value = 0;
 
     void produce() throws InterruptedException {
 
@@ -19,13 +20,16 @@ public class ProducerAndConsumer {
             while(true){
                 if(list.size() == LIMIT){
                     System.out.println("Waiting for items to be removed");
+                    lock1.wait();
                 }else{
                     while(list.size() < 5){
-                        System.out.println("adding a new item in the list");
-                        list.add(ThreadLocalRandom.current().nextInt());
+                        list.add(value);
+                        System.out.println("adding a new item in the list: " + value);
+                        value++;
                         lock1.notify(); //let other threads know that iteration is complete
                     }
                 }
+                Thread.sleep(500);
             }
         }
     }
@@ -37,16 +41,18 @@ public class ProducerAndConsumer {
              while(true){
                  if(list.size() == BOTTOM){
                      System.out.println("Waiting for items to be added");
+                     lock1.wait();
                  }else{
-                     while(list.size() == LIMIT || list.size() > LIMIT){
-                         System.out.println("removing items in the list");
-                         list.remove(0);
+                         System.out.println("Removing items in the list: " + list.get(list.size() - 1));
+                         list.remove(--value);
                          lock1.notify(); //let other threads know that iteration is complete
                      }
-                 }
+                 Thread.sleep(500);
              }
+
          }
-    }
+     }
+
 }
 
 class ProducerAndConsumerApp{

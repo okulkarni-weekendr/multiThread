@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/multithreading.iml" filepath="$PROJECT_DIR$/multithreading.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scalaPractice/scalaPractice.iml" filepath="$PROJECT_DIR$/scalaPractice/scalaPractice.iml" />
     </modules>
   </component>
 </project>
